@@ -1,15 +1,19 @@
-odoo.define('hr_attendance_kiosk_time_limit.kiosk_patch', function (require) {
+odoo.define('your_module.kiosk_patch', function (require) {
     "use strict";
 
-    var KioskMode = require('hr_attendance.kiosk_mode');
+    const KioskMode = require('hr_attendance.kiosk_mode');
+
+    console.log("✅ kiosk_patch.js зареден успешно!");
 
     KioskMode.include({
         _onBarcodeScanned: async function (barcode) {
+            console.log("🟡 Служител сканиран!");
+
             const now = new Date();
             const hour = now.getHours();
             const minute = now.getMinutes();
             const totalMinutes = hour * 60 + minute;
-            const limit = 15 * 60; // 15:00 = 900 минути
+            const limit = 15 * 60;
 
             await this._super.apply(this, arguments);
 
